@@ -13,8 +13,7 @@ Depends:
 License: GPL (>= 2)
 Suggests:
     devtools
-collate: 
-    "exampleDataset.R"
+collate: "exampleDataset.R"
     "polyreg.R"
     "PolyregPack-package.R"
     "reg.R"
