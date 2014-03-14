@@ -28,6 +28,40 @@ setGeneric(name="signi",
              standardGeneric("signi")
            }
 )
+#' @export
+setMethod(f="signi","polyreg",
+          definition=function(x,...){
+            intercept <- rep(1,nrow(x@X))
+            Y <- getY(x)
+            X <- getX(x)
+            X <- cbind(intercept,X)
+            beta.hat <- coef(x)
+            table <-lapply(1:ncol(beta.hat), function(i){
+              b <- beta.hat[,i][!is.na(beta.hat[,i])]
+              X.new <- X[,which(colnames(X)%in%names(b))]
+              ee <- t(Y-X.new%*%b)%*%(Y-X.new%*%b)
+              ee.m <- rep(ee, ncol(X.new))
+              df <- nrow(X.new)-ncol(X.new)
+              df.m <- rep(df,ncol(X.new))
+              SS <- as.numeric(ee/df)
+              var.b <- SS*solve(t(X.new)%*%X.new)
+              Std.Error <- sqrt(diag(var.b))
+              t.value <- b/Std.Error
+              p.value <- 2*mapply(pt, q=-abs(t.value), df=df)
+              result <- cbind(Std.Error,t.value,p.value,df.m,ee.m)
+            })
+            names(table) <- paste("Model",1:ncol(beta.hat))
+            object <- as(x, "signi.polyreg")
+            object@t <- lapply(table, function(x) x[,"t.value"])
+            object@p <- lapply(table, function(x) x[,"p.value"])
+            object@std.error <- lapply(table, function(x) x[,"Std.Error"])
+            object@df <- sapply(table,function(x) x[1,"df.m"])
+            object@obs <- nrow(X)
+            object@ssr <- sapply(table,function(x) x[1,"ee.m"])
+            return(object)
+          }
+)
+            
 
 #' @export
 setMethod(f="signi",signature(x="matrix", y="numeric"),
@@ -41,7 +75,7 @@ setMethod(f="signi",signature(x="matrix", y="numeric"),
             table <-lapply(1:ncol(beta.hat), function(i){
               b <- beta.hat[,i][!is.na(beta.hat[,i])]
               X.new <- X[,which(colnames(X)%in%names(b))]
-              ee <- t(y-X.new%*%b)%*%(y-X.new%*%b)
+              ee <- t(Y-X.new%*%b)%*%(Y-X.new%*%b)
               ee.m <- rep(ee, ncol(X.new))
               df <- nrow(X.new)-ncol(X.new)
               df.m <- rep(df,ncol(X.new))

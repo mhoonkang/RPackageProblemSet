@@ -105,3 +105,20 @@ setMethod("show","polyreg",
           function(object){
             print(object)
           })
+
+#' @export
+setMethod("plot","polyreg",
+          function(x,...){
+            X <- seq(1,length(x@R.squared), by=1)
+            Y <- x@R.squared
+            object <- signi(x@X, x@Y)
+            RSE <- sqrt(object@ssr/object@df)
+            par(mai=c(1.3,1.3,1.3,1.3))
+            plot(X,Y,type='o',main="The value of residual standard error \n and R-squared for each model", xlab="Model", ylab="R-squared", ylim=c(0,1))
+            par(new=TRUE)
+            plot(X,RSE,type='o',xlab="", ylab="", axes=FALSE, pch=2, lty=2)
+            axis(4,at=c(3.5, 4.0, 4.5, 5.0, 5.5, 6.0))
+            mtext("Residual standard error", 4, line=2)
+            legend("topright", pch=c(1,2), lty=c(1,2), legend=c("R-squared", "RSE"))
+}
+)

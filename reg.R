@@ -30,13 +30,14 @@ setGeneric(name="reg",
 #' @export
 setMethod(f="reg", signature(x="matrix", y="numeric"),
           definition=function(x,y){
-            if(is.null(colnames(x))) colnames(x) <- paste("V",1:ncol(x),sep="")
+            if(is.null(colnames(x))) colnames(x) <- paste("x",1:ncol(x),sep="")
             one <- rep(1,nrow(x))
+            M <- one%*%solve(t(one)%*%one)%*%t(one)
             combi <- lapply(1:ncol(x), function(i) combn(1:ncol(x),i))
             X <- cbind(one, x)
             if(ncol(x)==1){
               beta <- solve(t(X)%*%X)%*%t(X)%*%y
-              R.squared <- (t(y)%*%X%*%solve(t(X)%*%X)%*%t(X)%*%y)/(t(y)%*%y)
+              R.squared <- (t(y)%*%X%*%solve(t(X)%*%X)%*%t(X)%*%y-t(y)%*%M%*%y)/(t(y)%*%y-t(y)%*%M%*%y)
               rownames(beta) <- c("intercept", colnames(x))
               colnames(beta) <- paste("Model",1:ncol(beta))
               R.squared <- as.numeric(R.squared)
@@ -50,7 +51,7 @@ setMethod(f="reg", signature(x="matrix", y="numeric"),
             })
             R.squared <- sapply(1:ncol(x), function(i){
               sapply(1:ncol(combi[[i]]), function(j){
-                (t(y)%*%X[,c(1,combi[[i]][,j]+1)]%*%solve(t(X[,c(1,combi[[i]][,j]+1)])%*%X[,c(1,combi[[i]][,j]+1)])%*%t(X[,c(1,combi[[i]][,j]+1)])%*%y)/(t(y)%*%y)
+                 (t(y)%*%X[,c(1,combi[[i]][,j]+1)]%*%solve(t(X[,c(1,combi[[i]][,j]+1)])%*%X[,c(1,combi[[i]][,j]+1)])%*%t(X[,c(1,combi[[i]][,j]+1)])%*%y-t(y)%*%M%*%y)/(t(y)%*%y-t(y)%*%M%*%y)
               })
             })
             intercept <- unlist(sapply(1:ncol(x), function(i) beta[[i]][1,]))
