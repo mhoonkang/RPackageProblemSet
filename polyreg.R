@@ -7,8 +7,8 @@
 #' \itemize{
 #' \item{X}{The covariates matrix input}
 #' \item{Y}{The dependent variable numeric vector input}
-#' \item{coefficient}{Coefficients for each covariate in each model}
-#' \item{R.squared}{The value of R-sqaured for each model}
+#' \item{coefficient}{A matrix of coefficients in each model}
+#' \item{R.squared}{A vector of the value of R-sqaured for each model}
 #' }
 #'
 #' @author Myunghoon Kang: \email{myunghoon@@wustl.edu}
