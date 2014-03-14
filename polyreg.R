@@ -15,7 +15,7 @@
 #' @aliases polyreg-class initialize, polyreg-method 
 #' @rdname polyreg
 #' @export
-setClass(Class="polyreg", 
+setClass(Class="polyreg",  # set polyreg class
          representation=representation(
            X="matrix",
            Y="numeric",
@@ -31,7 +31,7 @@ setClass(Class="polyreg",
 )
 
 #' @export
-setMethod("initialize", "polyreg", function(.Object, ...){
+setMethod("initialize", "polyreg", function(.Object, ...){ # initialize polyreg class
   value=callNextMethod()
   validObject(value)
   return(value)
@@ -39,55 +39,55 @@ setMethod("initialize", "polyreg", function(.Object, ...){
 )
 
 #' @export
-setGeneric("getX", 
+setGeneric("getX", # set get method in generic
           function(object="polyreg"){
             standardGeneric("getX")
           }
 )
 
-#' @export
-setMethod("getX", "polyreg",
+#' @export         
+setMethod("getX", "polyreg", # set get method. get a covariates matrix from polyreg class object
           function(object){
             return(object@X)
           }
 )
 
-#' @export
-setGeneric("getY", 
+#' @export         
+setGeneric("getY", # set get method in generic
            function(object="polyreg"){
              standardGeneric("getY")
            }
 )
 
-#' @export
-setMethod("getY", "polyreg",
+#' @export         
+setMethod("getY", "polyreg", # set get method. get Y from polyreg class object
           function(object){
             return(object@Y)
           }
 )
 
-#' @export
-setMethod("coef", "polyreg",
+#' @export         
+setMethod("coef", "polyreg", # set coef method against polyreg class object. it gets coefficient from polyreg class object.
           function(object){
             return(object@coefficient)
           }
 )
 
-#' @export
-setGeneric("getRsquared", 
+#' @export        
+setGeneric("getRsquared", # set get method in generic
            function(object="polyreg"){
              standardGeneric("getRsquared")
            }
 )
 
-#' @export
-setMethod("getRsquared", "polyreg",
+#' @export        
+setMethod("getRsquared", "polyreg", # set get method. get R-squared vector from polyreg class object
           function(object){
             return(object@R.squared)
           }
 )
 
-#' @export
+#' @export        # set print method. it will show coefficient and R-squred over all models
 setMethod("print","polyreg",
           function(x, ...){
             for(i in 1:ncol(x@coefficient)){
@@ -100,14 +100,14 @@ setMethod("print","polyreg",
           }
 )
 
-#' @export
-setMethod("show","polyreg",
+#' @export 
+setMethod("show","polyreg", #set show method. it will show the same thing as print shows.
           function(object){
             print(object)
           })
 
 #' @export
-setMethod("plot","polyreg",
+setMethod("plot","polyreg", #set plot method. it will plot the value of residual standard error and R-squared for each model.
           function(x,...){
             X <- seq(1,length(x@R.squared), by=1)
             Y <- x@R.squared
@@ -117,7 +117,7 @@ setMethod("plot","polyreg",
             plot(X,Y,type='o',main="The value of residual standard error \n and R-squared for each model", xlab="Model", ylab="R-squared", ylim=c(0,1))
             par(new=TRUE)
             plot(X,RSE,type='o',xlab="", ylab="", axes=FALSE, pch=2, lty=2)
-            axis(4,at=c(3.5, 4.0, 4.5, 5.0, 5.5, 6.0))
+            axis(4,at=round(seq(floor(min(RSE)),ceiling(max(RSE)),length=10),0))
             mtext("Residual standard error", 4, line=2)
             legend("topright", pch=c(1,2), lty=c(1,2), legend=c("R-squared", "RSE"))
 }

@@ -1,7 +1,7 @@
-#' polyregPack
+#' PolyregPack
 #'
-#' The polyregPack package performs regression for all possible combinations of covariates.  
-#' @name polyregPack
+#' The PolyregPack package performs regression for all possible combinations of covariates.  
+#' @name PolyregPack
 #' @docType package
 #' @author  Myunghoon Kang: \email{myunghoon@@wustl.edu}
 #' @examples 

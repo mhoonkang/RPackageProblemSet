@@ -21,7 +21,7 @@
 #' @aliases signi.polyreg-class initialize, signi.polyreg-method 
 #' @rdname signi.polyreg
 #' @export
-setClass(Class="signi.polyreg", 
+setClass(Class="signi.polyreg",  # set signi.polyreg class as a subclass of polyreg
          contains="polyreg",
          representation=representation(
            t = "list",
@@ -46,7 +46,7 @@ setClass(Class="signi.polyreg",
 )
 
 #' @export
-setMethod("initialize", "signi.polyreg", 
+setMethod("initialize", "signi.polyreg", #initialize signi.polyreg class
           function(.Object, ...){
             value=callNextMethod()
             return(value)
@@ -54,7 +54,7 @@ setMethod("initialize", "signi.polyreg",
 ) 
 
 #' @export
-setAs(from="polyreg", to="signi.polyreg",
+setAs(from="polyreg", to="signi.polyreg", #set the method of changing class from polyreg to signi.polyreg
       def=function(from){
         new("signi.polyreg",
             X=from@X,
@@ -66,7 +66,7 @@ setAs(from="polyreg", to="signi.polyreg",
 )
 
 #' @export
-setMethod("print","signi.polyreg",
+setMethod("print","signi.polyreg", #set print method for signi.polyreg class
           function(x, ...){
             for(i in 1:ncol(x@coefficient)){
               cat("coefficients (",colnames(x@coefficient)[i],"): \n",sep="")
@@ -83,7 +83,7 @@ setMethod("print","signi.polyreg",
 )
 
 #' @export
-setMethod("show","signi.polyreg",
-          function(object){
+setMethod("show","signi.polyreg", # set show method for signi.polyreg class.
+          function(object){       # it will show the same thing as print shows. 
             print(object)
           })
