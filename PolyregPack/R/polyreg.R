@@ -110,14 +110,10 @@ setMethod("show","polyreg",
 <<<<<<< HEAD
 setMethod("plot","polyreg", 
           function(x,...){
-=======
-setMethod("plot","polyreg", #set plot method. it will plot the value of residual standard error and R-squared for each model.
-          function(x,...){  # signi.polygen class object will inherit this method.
->>>>>>> 499eaf15f4e3a3c3e37c1681dfb485ac8c8eb4bf
             X <- seq(1,length(x@R.squared), by=1)
             Y <- x@R.squared
             object <- signi(x@X, x@Y)
-            RSE <- sqrt(object@ssr/object@df) # claculating Residual Standard Error
+            RSE <- sqrt(object@ssr/object@df) 
             par(mai=c(1.3,1.3,1.3,1.3))
             plot(X,Y,type='o',main="The value of residual standard error \n and R-squared for each model", xlab="Model", ylab="R-squared", ylim=c(0,1))
             par(new=TRUE)
