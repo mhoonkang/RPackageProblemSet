@@ -107,7 +107,6 @@ setMethod("show","polyreg",
           })
 
 #' @export
-<<<<<<< HEAD
 setMethod("plot","polyreg", 
           function(x,...){
             X <- seq(1,length(x@R.squared), by=1)
