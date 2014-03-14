@@ -79,4 +79,3 @@ setMethod(f="reg", signature(x="matrix", y="numeric"),
             object <- new("polyreg", X=x, Y=y, coefficient=beta, R.squared=R.squared)
             return(new("polyreg", X=x, Y=y, coefficient=beta, R.squared=R.squared))
           })
-
