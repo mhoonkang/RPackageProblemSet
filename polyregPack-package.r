@@ -8,7 +8,7 @@
 #'
 #' \dontrun{
 #' demo(reg)
-#' demo(mrs)
+#' demo(signi)
 #' }
 #'
 NULL
