@@ -1,8 +1,0 @@
-library(devtools)
-library(roxygen2)
-find_rtools()
-current.code <- as.package("PolyregPack")
-load_all(current.code)
-document(current.code)
-check(current.code) 
-install(pkg=current.code, local=TRUE) 
