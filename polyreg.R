@@ -117,7 +117,7 @@ setMethod("plot","polyreg", #set plot method. it will plot the value of residual
             plot(X,Y,type='o',main="The value of residual standard error \n and R-squared for each model", xlab="Model", ylab="R-squared", ylim=c(0,1))
             par(new=TRUE)
             plot(X,RSE,type='o',xlab="", ylab="", axes=FALSE, pch=2, lty=2)
-            axis(4,at=round(seq(floor(min(RSE)),ceiling(max(RSE)),length=10),0))
+            axis(4,at=round(seq(floor(min(RSE)),ceiling(max(RSE)),length=10),1))
             mtext("Residual standard error", 4, line=2)
             legend("topright", pch=c(1,2), lty=c(1,2), legend=c("R-squared", "RSE"))
 }
